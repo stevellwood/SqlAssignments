@@ -1,0 +1,300 @@
+6 rows in set (0.00 sec)
+
+mysql> insert instructor values('fin','Finance',1,3);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert classToMajor values(4,3);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> show create table classToMajor;
++--------------+----------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+-------------------------------------------------+
+| Table        | Create Table
+
+
+                                                 |
++--------------+----------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+-------------------------------------------------+
+| classToMajor | CREATE TABLE `classtomajor` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `majorid` int(11) DEFAULT NULL,
+  `classid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `majorid` (`majorid`),
+  KEY `classid` (`classid`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 |
++--------------+----------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+-------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> insert instructor values(null,'fin','Tim','Sachs',1,1);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint f
+ails (`tiy`.`instructor`, CONSTRAINT `instructor_ibfk_1` FOREIGN KEY (`specialty
+`) REFERENCES `major` (`id`))
+mysql> insert instructor values(2,'fin','Tim','Sachs',1,1);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint f
+ails (`tiy`.`instructor`, CONSTRAINT `instructor_ibfk_1` FOREIGN KEY (`specialty
+`) REFERENCES `major` (`id`))
+mysql> insert instructor values(null,'Tim','Sachs','fin',1,1);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> describe instructor;
++---------------------+-------------+------+-----+---------+----------------+
+| Field               | Type        | Null | Key | Default | Extra          |
++---------------------+-------------+------+-----+---------+----------------+
+| id                  | int(11)     | NO   | PRI | NULL    | auto_increment |
+| first_name          | varchar(30) | NO   |     | NULL    |                |
+| last_name           | varchar(30) | NO   |     | NULL    |                |
+| specialty           | varchar(10) | YES  | MUL | NULL    |                |
+| years_of_experience | int(11)     | YES  |     | NULL    |                |
+| tenured             | tinyint(1)  | YES  |     | NULL    |                |
++---------------------+-------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from instructor;
++----+------------+-----------+-----------+---------------------+---------+
+| id | first_name | last_name | specialty | years_of_experience | tenured |
++----+------------+-----------+-----------+---------------------+---------+
+|  1 | Von        | Reich     | eng       |                  10 |       1 |
+|  3 | Tim        | Sachs     | fin       |                   1 |       1 |
++----+------------+-----------+-----------+---------------------+---------+
+2 rows in set (0.00 sec)
+
+mysql> insert instructor values(3,"Count","Chalk",'acc',3,0);
+ERROR 1062 (23000): Duplicate entry '3' for key 'PRIMARY'
+mysql> insert instructor values(2,"Count","Chalk",'acc',3,0);
+Query OK, 1 row affected (0.11 sec)
+
+mysql> select * from instructor;
++----+------------+-----------+-----------+---------------------+---------+
+| id | first_name | last_name | specialty | years_of_experience | tenured |
++----+------------+-----------+-----------+---------------------+---------+
+|  1 | Von        | Reich     | eng       |                  10 |       1 |
+|  2 | Count      | Chalk     | acc       |                   3 |       0 |
+|  3 | Tim        | Sachs     | fin       |                   1 |       1 |
++----+------------+-----------+-----------+---------------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> insert instructor values(5,'mat','Matthew','Calc',25,0);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint f
+ails (`tiy`.`instructor`, CONSTRAINT `instructor_ibfk_1` FOREIGN KEY (`specialty
+`) REFERENCES `major` (`id`))
+mysql> insert instructor values(5,'Matthew','Calc','mat',25,0);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert instructor values(null,'Amy','Shriver','gbs',35,0);
+Query OK, 1 row affected (0.11 sec)
+
+mysql> select * from instructor;
++----+------------+-----------+-----------+---------------------+---------+
+| id | first_name | last_name | specialty | years_of_experience | tenured |
++----+------------+-----------+-----------+---------------------+---------+
+|  1 | Von        | Reich     | eng       |                  10 |       1 |
+|  2 | Count      | Chalk     | acc       |                   3 |       0 |
+|  3 | Tim        | Sachs     | fin       |                   1 |       1 |
+|  5 | Matthew    | Calc      | mat       |                  25 |       0 |
+|  6 | Amy        | Shriver   | gbs       |                  35 |       0 |
++----+------------+-----------+-----------+---------------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> insert instructor values(null,'Almsa','Wool','gen',1,0);
+Query OK, 1 row affected (0.17 sec)
+
+mysql> show tables;
++----------------+
+| Tables_in_tiy  |
++----------------+
+| class          |
+| classtomajor   |
+| employee       |
+| grade          |
+| instructor     |
+| major          |
+| student        |
+| student1       |
+| studenttoclass |
++----------------+
+9 rows in set (0.06 sec)
+
+mysql> drop table student1;
+Query OK, 0 rows affected (0.23 sec)
+
+mysql> show create table class;
++-------+-----------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+----------------------------+
+| Table | Create Table
+
+
+
+                            |
++-------+-----------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+----------------------------+
+| class | CREATE TABLE `class` (
+  `id` varchar(10) NOT NULL,
+  `department` varchar(30) DEFAULT NULL,
+  `instructor` int(11) DEFAULT NULL,
+  `level` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `instructor` (`instructor`),
+  CONSTRAINT `class_ibfk_1` FOREIGN KEY (`instructor`) REFERENCES `instructor` (
+`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 |
++-------+-----------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+----------------------------+
+1 row in set (0.00 sec)
+
+mysql> create table classToMajor (
+    ->  id int NOT NULL primary key AUTO_INCREMENT,
+    ->  majorid varchar (10) NOT NULL,
+    ->  classid varchar (10) NOT NULL,
+    ->  FOREIGN KEY (majorid) REFERENCES major(id),
+    ->  FOREIGN KEY (classid) REFERENCES class(id),
+    ->  -- PRIMARY KEY (id)
+    ->  );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that
+corresponds to your MySQL server version for the right syntax to use near ')' at
+ line 8
+mysql> create table classToMajor (
+    ->  id int NOT NULL primary key AUTO_INCREMENT,
+    ->  majorid varchar (10) NOT NULL,
+    ->  classid varchar (10) NOT NULL,
+    ->  FOREIGN KEY (majorid) REFERENCES major(id),
+    ->  FOREIGN KEY (classid) REFERENCES class(id)
+    ->  -- PRIMARY KEY (id)
+    ->  );
+ERROR 1050 (42S01): Table 'classtomajor' already exists
+mysql> explain classtomajor;
++---------+---------+------+-----+---------+----------------+
+| Field   | Type    | Null | Key | Default | Extra          |
++---------+---------+------+-----+---------+----------------+
+| ID      | int(11) | NO   | PRI | NULL    | auto_increment |
+| majorid | int(11) | YES  | MUL | NULL    |                |
+| classid | int(11) | YES  | MUL | NULL    |                |
++---------+---------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> alter table classstomajor change majorid majorid varchar(10);
+ERROR 1146 (42S02): Table 'tiy.classstomajor' doesn't exist
+mysql> alter table classtomajor change majorid majorid varchar(10);
+Query OK, 9 rows affected (1.23 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> alter table classtomajor change classid classid varchar(10);
+Query OK, 9 rows affected (1.02 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> explain class;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| id         | varchar(10) | NO   | PRI | NULL    |       |
+| department | varchar(30) | YES  |     | NULL    |       |
+| instructor | int(11)     | YES  | MUL | NULL    |       |
+| level      | int(11)     | NO   |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert class values('e101','Eng',null,101);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert class values('e101','Eng',null,101);
+ERROR 1062 (23000): Duplicate entry 'e101' for key 'PRIMARY'
+mysql>  insert class values('e102','Eng',null,102);
+Query OK, 1 row affected (0.08 sec)
+
+mysql>          insert class values('e103','Eng',null,103);
+Query OK, 1 row affected (0.12 sec)
+
+mysql>                  insert class values('e201','Eng',null,201);
+Query OK, 1 row affected (0.03 sec)
+
+mysql>                          insert class values('e202','Eng',null,202);
+Query OK, 1 row affected (0.03 sec)
+
+mysql>                                  insert class values('e203','Eng',null,20
+3);
+Query OK, 1 row affected (0.03 sec)
+
+mysql>                                          insert class values('e301','Eng'
+,null,301);
+Query OK, 1 row affected (0.05 sec)
+
+mysql>                                                  insert class values('e30
+2','Eng',null,302);
+Query OK, 1 row affected (0.03 sec)
+
+mysql>                                                          insert class val
+ues('e303','Eng',null,303);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> select * from class;
++------+------------+------------+-------+
+| id   | department | instructor | level |
++------+------------+------------+-------+
+| e101 | Eng        |       NULL |   101 |
+| e102 | Eng        |       NULL |   102 |
+| e103 | Eng        |       NULL |   103 |
+| e201 | Eng        |       NULL |   201 |
+| e202 | Eng        |       NULL |   202 |
+| e203 | Eng        |       NULL |   203 |
+| e301 | Eng        |       NULL |   301 |
+| e302 | Eng        |       NULL |   302 |
+| e303 | Eng        |       NULL |   303 |
++------+------------+------------+-------+
+9 rows in set (0.00 sec)
+
+mysql> drop table class;
+Query OK, 0 rows affected (0.41 sec)
+
+mysql> create table class (
+    ->  id varchar(10) primary key,
+    ->  department varchar(30),
+    ->  instructor int,
+    ->  level int NOT NULL,
+    ->  FOREIGN KEY (instructor) REFERENCES instructor(id));
+Query OK, 0 rows affected (0.44 sec)
+
+mysql> insert class values('e101','Eng',null,101);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select * from class;
++------+------------+------------+-------+
+| id   | department | instructor | level |
++------+------------+------------+-------+
+| e101 | Eng        |       NULL |   101 |
++------+------------+------------+-------+
+1 row in set (0.00 sec)
+
+mysql> insert instructor values(null,'Ernest','Hemingway','gen',6,0);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> select * from instructors;
+ERROR 1146 (42S02): Table 'tiy.instructors' doesn't exist
+mysql> select * from instructor;
++----+------------+-----------+-----------+---------------------+---------+
+| id | first_name | last_name | specialty | years_of_experience | tenured |
++----+------------+-----------+-----------+---------------------+---------+
+|  1 | Von        | Reich     | eng       |                  10 |       1 |
+|  2 | Count      | Chalk     | acc       |                   3 |       0 |
+|  3 | Tim        | Sachs     | fin       |                   1 |       1 |
+|  5 | Matthew    | Calc      | mat       |                  25 |       0 |
+|  6 | Amy        | Shriver   | gbs       |                  35 |       0 |
+|  7 | Almsa      | Wool      | gen       |                   1 |       0 |
+|  8 | Ernest     | Hemingway | gen       |                   6 |       0 |
++----+------------+-----------+-----------+---------------------+---------+
+7 rows in set (0.00 sec)
+
+mysql>

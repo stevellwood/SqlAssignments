@@ -1,0 +1,329 @@
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 17
+Server version: 5.7.13-log MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2016, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use tiy;
+Database changed
+mysql> select * from student;
++-----+------------+-----------+---------------------+------------+
+| id  | first_name | last_name | years_of_experience | start_date |
++-----+------------+-----------+---------------------+------------+
+| 100 | Eric       | Ephram    |                   2 | 2016-03-31 |
+| 110 | Greg       | Gould     |                   6 | 2016-09-30 |
+| 120 | Adam       | Ant       |                   5 | 2016-06-02 |
+| 130 | Howard     | Hess      |                   1 | 2016-02-28 |
+| 140 | Charles    | Caldwell  |                   7 | 2016-05-07 |
+| 150 | James      | Joyce     |                   9 | 2016-08-27 |
+| 160 | Doug       | Dumas     |                  13 | 2016-07-04 |
+| 170 | Kevin      | Kraft     |                   3 | 2016-04-15 |
+| 180 | Frank      | Fountain  |                   8 | 2016-01-31 |
+| 190 | Brian      | Biggs     |                   4 | 2015-12-25 |
++-----+------------+-----------+---------------------+------------+
+10 rows in set (0.00 sec)
+1) Create a list of students showing first and last names only.
+mysql> select first_name, last_name from student;
++------------+-----------+
+| first_name | last_name |
++------------+-----------+
+| Eric       | Ephram    |
+| Greg       | Gould     |
+| Adam       | Ant       |
+| Howard     | Hess      |
+| Charles    | Caldwell  |
+| James      | Joyce     |
+| Doug       | Dumas     |
+| Kevin      | Kraft     |
+| Frank      | Fountain  |
+| Brian      | Biggs     |
++------------+-----------+
+10 rows in set (0.00 sec)
+2) Create a list of students with all the columns but only if the student has less than 8 years experience
+
+mysql> select * from student where years_of_experience < 8;
++-----+------------+-----------+---------------------+------------+
+| id  | first_name | last_name | years_of_experience | start_date |
++-----+------------+-----------+---------------------+------------+
+| 100 | Eric       | Ephram    |                   2 | 2016-03-31 |
+| 110 | Greg       | Gould     |                   6 | 2016-09-30 |
+| 120 | Adam       | Ant       |                   5 | 2016-06-02 |
+| 130 | Howard     | Hess      |                   1 | 2016-02-28 |
+| 140 | Charles    | Caldwell  |                   7 | 2016-05-07 |
+| 170 | Kevin      | Kraft     |                   3 | 2016-04-15 |
+| 190 | Brian      | Biggs     |                   4 | 2015-12-25 |
++-----+------------+-----------+---------------------+------------+
+7 rows in set (0.00 sec)
+
+3) Create a list of students showing the lastname, startdate, and id columns only and sorted by last_name in ascending sequence
+mysql> SELECT * FROM student ORDER BY last_name ASC;
++-----+------------+-----------+---------------------+------------+
+| id  | first_name | last_name | years_of_experience | start_date |
++-----+------------+-----------+---------------------+------------+
+| 120 | Adam       | Ant       |                   5 | 2016-06-02 |
+| 190 | Brian      | Biggs     |                   4 | 2015-12-25 |
+| 140 | Charles    | Caldwell  |                   7 | 2016-05-07 |
+| 160 | Doug       | Dumas     |                  13 | 2016-07-04 |
+| 100 | Eric       | Ephram    |                   2 | 2016-03-31 |
+| 180 | Frank      | Fountain  |                   8 | 2016-01-31 |
+| 110 | Greg       | Gould     |                   6 | 2016-09-30 |
+| 130 | Howard     | Hess      |                   1 | 2016-02-28 |
+| 150 | James      | Joyce     |                   9 | 2016-08-27 |
+| 170 | Kevin      | Kraft     |                   3 | 2016-04-15 |
++-----+------------+-----------+---------------------+------------+
+10 rows in set (0.00 sec)
+
+4) Create a list of students showing all columns but only if the student first name is Adam, James, or Frank and sort them in last_name descending sequence.
+
+mysql> select * from student where first_name='Adam' or first_name='James' or fi
+rst_name='Frank' order by last_name DESC;
++-----+------------+-----------+---------------------+------------+
+| id  | first_name | last_name | years_of_experience | start_date |
++-----+------------+-----------+---------------------+------------+
+| 150 | James      | Joyce     |                   9 | 2016-08-27 |
+| 180 | Frank      | Fountain  |                   8 | 2016-01-31 |
+| 120 | Adam       | Ant       |                   5 | 2016-06-02 |
++-----+------------+-----------+---------------------+------------+
+3 rows in set (0.00 sec)
+
+5  Create a list of students showing firstname, lastname and startdate where the startdate is between Jan 1, 2016 and June 30, 2016 and order the list by descending start_date sequence.
+
+mysql> select first_name, last_name, start_date from student where start_date BE
+TWEEN '2016-01-01' AND '2016-06-30' order by start_date DESC;
++------------+-----------+------------+
+| first_name | last_name | start_date |
++------------+-----------+------------+
+| Adam       | Ant       | 2016-06-02 |
+| Charles    | Caldwell  | 2016-05-07 |
+| Kevin      | Kraft     | 2016-04-15 |
+| Eric       | Ephram    | 2016-03-31 |
+| Howard     | Hess      | 2016-02-28 |
+| Frank      | Fountain  | 2016-01-31 |
++------------+-----------+------------+
+6 rows in set (0.00 sec)
+
+=======================================================================================================================================4
+Advanced
+=======================================================================================================================================
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 18
+Server version: 5.7.13-log MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2016, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use tiy
+Database changed
+mysql> explain assingment;
+ERROR 1146 (42S02): Table 'tiy.assingment' doesn't exist
+mysql> explain assignment;
++----------------+---------+------+-----+---------+-------+
+| Field          | Type    | Null | Key | Default | Extra |
++----------------+---------+------+-----+---------+-------+
+| id             | int(11) | NO   | PRI | NULL    |       |
+| student_id     | int(11) | NO   | MUL | NULL    |       |
+| assignment_nbr | int(11) | NO   |     | NULL    |       |
+| grade_id       | int(11) | NO   | MUL | NULL    |       |
++----------------+---------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from assignment;
++----+------------+----------------+----------+
+| id | student_id | assignment_nbr | grade_id |
++----+------------+----------------+----------+
+| 11 |        100 |              9 |        2 |
+| 12 |        110 |              9 |        1 |
+| 13 |        120 |              9 |        4 |
+| 14 |        130 |              9 |        5 |
+| 15 |        140 |              9 |        3 |
+| 16 |        100 |             11 |        4 |
+| 17 |        110 |             11 |        3 |
+| 18 |        120 |             11 |        2 |
+| 19 |        130 |             11 |        5 |
+| 20 |        140 |             11 |        5 |
++----+------------+----------------+----------+
+10 rows in set (0.00 sec)
+
+mysql> explain grade;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| gid         | int(11)     | NO   | PRI | NULL    |       |
+| description | varchar(30) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from grade;
++-----+-----------------------------+
+| gid | description                 |
++-----+-----------------------------+
+|   1 | Incomplete                  |
+|   2 | Complete and unsatisfactory |
+|   3 | Complete and satisfactory   |
+|   4 | Exceeds expectations        |
+|   5 | Not graded                  |
++-----+-----------------------------+
+5 rows in set (0.00 sec)
+=======================================================================================================================================4
+Pro
+=======================================================================================================================================
+mysql>insert assignment values(21,200,11,4)
+
+15:47:42	insert assignment values(21,200,11,4)	Error Code: 1452. Cannot add or update a child row: a foreign key constraint fails (`tiy`.`assignment`, CONSTRAINT `assignment_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`))	0.093 sec
+=======================================================================================================================================4
+Pro Plus
+=======================================================================================================================================
+mysql> alter table student add column major_id int;
+Query OK, 0 rows affected (1.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> create table major (
+    ->  mid int primary key,
+    ->  majorname varchar(30)
+    -> );
+Query OK, 0 rows affected (0.31 sec)
+
+mysql> insert major values(1,"TIY-lvlA");
+Query OK, 1 row affected (0.15 sec)
+
+mysql> insert major values(2,"TIY-lvlB");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert major values(3,"TIY-lvlC");
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert major values(4,"TIY-lvlD");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> describe major;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| mid       | int(11)     | NO   | PRI | NULL    |       |
+| majorname | varchar(30) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> create table class (
+    ->  classid int primary key,
+    ->  description varchar(30) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.55 sec)
+
+mysql> insert class values(1,"Intro");
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert class values(2,"4 week");
+Query OK, 1 row affected (0.14 sec)
+
+mysql> insert class values(3,"12 week");
+Query OK, 1 row affected (0.16 sec)
+
+mysql> insert class values(4,"16 week");
+Query OK, 1 row affected (0.05 sec)
+
+mysql> create table classToMajor (
+    ->  ctm int primary key,
+    ->  majorid int,
+    ->  classid int,
+    ->  FOREIGN KEY (majorid) REFERENCES major(mid),
+    ->  FOREIGN KEY (classid) REFERENCES class(classid)
+    -> );
+Query OK, 0 rows affected (0.54 sec)
+//I couldn't add anything to this
+mysql> create table classToMajor (
+    ->  ctm int primary key AUTO_INCREMENT,
+    ->  majorid int,
+    ->  classid int,
+    ->  FOREIGN KEY (majorid) REFERENCES major(mid),
+    ->  FOREIGN KEY (classid) REFERENCES class(classid)
+    -> );
+Query OK, 0 rows affected (0.34 sec)
+//this failed as well
+mysql> create table classToMajor (
+    ->  ID int NOT NULL AUTO_INCREMENT,
+    ->  majorid int,
+    ->  classid int,
+    ->  FOREIGN KEY (majorid) REFERENCES major(mid),
+    ->  FOREIGN KEY (classid) REFERENCES class(classid),
+    ->  PRIMARY KEY (ID)
+    -> );
+Query OK, 0 rows affected (0.43 sec)
+//This worked for adding values without 3rd parameter
+mysql> insert into classToMajor (majorid,classid) values (1,1),(2,2),(2,1),(3,3)
+,(3,1),(4,4),(4,1),(4,2);
+Query OK, 8 rows affected (0.04 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> select * from classToMajor;
++----+---------+---------+
+| ID | majorid | classid |
++----+---------+---------+
+|  1 |       1 |       1 |
+|  2 |       2 |       2 |
+|  3 |       2 |       1 |
+|  4 |       3 |       3 |
+|  5 |       3 |       1 |
+|  6 |       4 |       4 |
+|  7 |       4 |       1 |
+|  8 |       4 |       2 |
++----+---------+---------+
+8 rows in set (0.00 sec)
+
+mysql> create table studentToClass (
+    ->  id int NOT NULL AUTO_INCREMENT,
+    ->  studentid int NOT NULL,
+    ->  class_id int NOT NULL,
+    ->  FOREIGN KEY (studentid) REFERENCES student(id),
+    ->  FOREIGN KEY (class_id ) REFERENCES class(classid),
+    ->  PRIMARY KEY (id)
+    -> );
+Query OK, 0 rows affected (0.41 sec)
+
+mysql> insert into studentToClass (studentid,class_id) values (100,1),(110,1),(1
+20,1),(130,1),(140,1),(150,1),(150,2),(160,1),(160,3),(170,1),(180,1),(190,2);
+Query OK, 12 rows affected (0.27 sec)
+Records: 12  Duplicates: 0  Warnings: 0
+
+mysql> select * from class;
++---------+-------------+
+| classid | description |
++---------+-------------+
+|       1 | Intro       |
+|       2 | 4 week      |
+|       3 | 12 week     |
+|       4 | 16 week     |
++---------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from studentToClass;
++----+-----------+----------+
+| id | studentid | class_id |
++----+-----------+----------+
+|  1 |       100 |        1 |
+|  2 |       110 |        1 |
+|  3 |       120 |        1 |
+|  4 |       130 |        1 |
+|  5 |       140 |        1 |
+|  6 |       150 |        1 |
+|  7 |       150 |        2 |
+|  8 |       160 |        1 |
+|  9 |       160 |        3 |
+| 10 |       170 |        1 |
+| 11 |       180 |        1 |
+| 12 |       190 |        2 |
++----+-----------+----------+
+12 rows in set (0.00 sec)
